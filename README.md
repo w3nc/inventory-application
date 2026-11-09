@@ -8,6 +8,12 @@ record). Every drawer and card can be created, read, updated and deleted.
 
 ---
 
+## Live preview
+
+https://inventory-application-vldt.onrender.com/
+
+---
+
 ## Running it
 
 The database is already set up on this PC (PostgreSQL 16, listening on port
