@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> · Groove Cellar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page">
+    <header class="masthead">
+      <div class="masthead-top">
+        <div>
+          <p class="kicker">Groove Cellar / Stock Ledger</p>
+          <h1><%= locals.heading || title %><span class="dot">.</span></h1>
+        </div>
+        <div class="masthead-actions">
+          <% if (isAdmin) { %>
+            <a class="button solid" href="/drawers/new">+ New drawer</a>
+            <a class="button solid" href="/records/new">+ New card</a>
+            <form method="post" action="/lock" class="inline">
+              <button class="button ghost" type="submit">Lock</button>
+            </form>
+          <% } else { %>
+            <a class="button solid" href="/unlock">Unlock editing</a>
+          <% } %>
+        </div>
+      </div>
+      <div class="rule"></div>
+    </header>

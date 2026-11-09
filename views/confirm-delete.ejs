@@ -1,0 +1,11 @@
+<%- include("partials/header") %>
+
+<section class="sheet confirm-sheet">
+  <p class="warning"><%= warning %></p>
+  <form method="post" action="<%= action %>" class="card-actions">
+    <button class="button danger solid" type="submit">Yes, delete it</button>
+    <a class="button" href="/">Keep it</a>
+  </form>
+</section>
+
+<%- include("partials/footer") %>

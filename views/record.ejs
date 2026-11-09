@@ -1,0 +1,48 @@
+<%- include("partials/header") %>
+
+<section class="sheet one-card">
+  <article class="card big <%= isEmpty ? 'out' : (isLow ? 'low' : '') %>">
+    <div class="band"></div>
+    <div class="card-body">
+      <h2 class="card-title"><%= record.title %></h2>
+      <p class="meta"><%= record.artist %> · <%= record.release_year || "—" %></p>
+      <p class="meta">Shelf: <%= record.shelf || "—" %></p>
+      <p class="meta">
+        Drawer:
+        <% if (record.drawer_id) { %>
+          <a href="/?drawer=<%= record.drawer_id %>"><%= record.drawer_name %></a>
+        <% } else { %>
+          Unfiled
+        <% } %>
+      </p>
+
+      <% if (isEmpty) { %>
+        <span class="stamp big-stamp">Sold out</span>
+      <% } else if (isLow) { %>
+        <span class="stamp big-stamp">Low stock</span>
+      <% } %>
+
+      <p class="qty">qty: <%= record.qty %></p>
+      <p class="price"><%= price %></p>
+      <p class="worth">On the shelf: <%= formatPesos(record.qty * record.price_cents) %></p>
+
+      <div class="card-actions">
+        <a class="button" href="/records">All cards</a>
+        <% if (isAdmin) { %>
+          <a class="button" href="/records/<%= record.id %>/edit">Edit</a>
+          <a class="button danger" href="/records/<%= record.id %>/delete">Delete</a>
+        <% } %>
+      </div>
+    </div>
+  </article>
+</section>
+
+<p class="note">
+  <% if (!isAdmin) { %>
+    Anyone can look. <a href="/unlock">Unlock editing</a> to change this card.
+  <% } else { %>
+    You are unlocked. Lock again when you are done.
+  <% } %>
+</p>
+
+<%- include("partials/footer") %>

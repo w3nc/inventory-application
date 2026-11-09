@@ -1,0 +1,26 @@
+<%- include("partials/header") %>
+
+<section class="sheet form-sheet">
+  <form method="post" action="<%= action %>" class="ledger-form">
+    <label class="field">
+      <span class="label">Drawer name</span>
+      <input name="name" value="<%= values.name %>" maxlength="60" required autofocus>
+      <% if (errors.name) { %><span class="hint warn"><%= errors.name %></span><% } %>
+    </label>
+
+    <label class="field">
+      <span class="label">Note (optional)</span>
+      <textarea name="note" rows="3" maxlength="200"><%= values.note %></textarea>
+      <% if (errors.note) { %><span class="hint warn"><%= errors.note %></span><% } %>
+    </label>
+
+    <div class="card-actions">
+      <button class="button solid" type="submit">Save drawer</button>
+      <a class="button" href="/">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<p class="note">A drawer is a category. Cards filed inside it are its records.</p>
+
+<%- include("partials/footer") %>

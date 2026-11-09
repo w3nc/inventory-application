@@ -1,0 +1,69 @@
+<%- include("partials/header") %>
+
+<section class="sheet form-sheet">
+  <form method="post" action="<%= action %>" class="ledger-form">
+    <div class="field-row">
+      <label class="field">
+        <span class="label">Title</span>
+        <input name="title" value="<%= values.title %>" maxlength="120" required autofocus>
+        <% if (errors.title) { %><span class="hint warn"><%= errors.title %></span><% } %>
+      </label>
+
+      <label class="field">
+        <span class="label">Artist</span>
+        <input name="artist" value="<%= values.artist %>" maxlength="80" required>
+        <% if (errors.artist) { %><span class="hint warn"><%= errors.artist %></span><% } %>
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label class="field">
+        <span class="label">Year</span>
+        <input name="release_year" value="<%= values.release_year %>" placeholder="1976" maxlength="4">
+        <% if (errors.release_year) { %><span class="hint warn"><%= errors.release_year %></span><% } %>
+      </label>
+
+      <label class="field">
+        <span class="label">Shelf</span>
+        <input name="shelf" value="<%= values.shelf %>" placeholder="J-03" maxlength="12">
+        <% if (errors.shelf) { %><span class="hint warn"><%= errors.shelf %></span><% } %>
+      </label>
+    </div>
+
+    <div class="field-row">
+      <label class="field">
+        <span class="label">Quantity</span>
+        <input name="qty" value="<%= values.qty %>" inputmode="numeric" placeholder="3">
+        <% if (errors.qty) { %><span class="hint warn"><%= errors.qty %></span><% } %>
+      </label>
+
+      <label class="field">
+        <span class="label">Price (PHP)</span>
+        <input name="price" value="<%= values.price %>" inputmode="decimal" placeholder="1850">
+        <% if (errors.price) { %><span class="hint warn"><%= errors.price %></span><% } %>
+      </label>
+    </div>
+
+    <label class="field">
+      <span class="label">Which drawer?</span>
+      <select name="drawer_id">
+        <option value="">— Unfiled —</option>
+        <% drawers.forEach(function (drawer) { %>
+          <option value="<%= drawer.id %>" <%= String(drawer.id) === String(values.drawer_id) ? 'selected' : '' %>>
+            <%= drawer.name %>
+          </option>
+        <% }); %>
+      </select>
+      <% if (errors.drawer_id) { %><span class="hint warn"><%= errors.drawer_id %></span><% } %>
+    </label>
+
+    <div class="card-actions">
+      <button class="button solid" type="submit">Save card</button>
+      <a class="button" href="/">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<p class="note">A card that drops to 2 or fewer copies gets a low stock stamp.</p>
+
+<%- include("partials/footer") %>

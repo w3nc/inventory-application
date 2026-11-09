@@ -1,0 +1,79 @@
+<%- include("partials/header") %>
+
+<nav class="tabs" aria-label="Drawers">
+  <% drawers.forEach(function (drawer) { %>
+    <a class="tab <%= drawer.id === activeId ? 'active' : '' %>"
+       href="/?drawer=<%= drawer.id %>">
+      <%= drawer.name %> (<%= drawer.card_count %>)
+    </a>
+  <% }); %>
+  <% if (unfiled.length) { %>
+    <a class="tab" href="/records">Unfiled (<%= unfiled.length %>)</a>
+  <% } %>
+</nav>
+
+<section class="drawer">
+  <% if (!drawers.length) { %>
+    <p class="empty">
+      The cellar is empty. <% if (isAdmin) { %>
+        <a href="/drawers/new">Add the first drawer</a> to start the ledger.
+      <% } else { %>
+        <a href="/unlock">Unlock editing</a> to add the first drawer.
+      <% } %>
+    </p>
+  <% } else if (!activeRecords.length) { %>
+    <p class="empty">
+      This drawer is empty. <% if (isAdmin) { %>
+        <a href="/records/new?drawer=<%= activeId %>">Add a card</a>.
+      <% } else { %>
+        <a href="/unlock">Unlock editing</a> to add a card.
+      <% } %>
+    </p>
+  <% } else { %>
+    <div class="cards">
+      <% activeRecords.forEach(function (card) { %>
+        <article class="card <%= card.qty <= 2 ? (card.qty === 0 ? 'out' : 'low') : '' %>">
+          <div class="band"></div>
+          <div class="card-body">
+            <h2 class="card-title"><%= card.title %></h2>
+
+            <p class="meta">
+              <%= card.artist %> · <%= card.release_year || "—" %>
+            </p>
+            <p class="meta">Shelf: <%= card.shelf || "—" %></p>
+
+            <% if (card.qty === 0) { %>
+              <span class="stamp">Sold out</span>
+            <% } else if (card.qty <= 2) { %>
+              <span class="stamp">Low stock</span>
+            <% } %>
+
+            <p class="qty">qty: <%= card.qty %></p>
+            <p class="price"><%= formatPesos(card.price_cents) %></p>
+
+            <div class="card-actions">
+              <a class="button" href="/records/<%= card.id %>">Open</a>
+              <% if (isAdmin) { %>
+                <a class="button" href="/records/<%= card.id %>/edit">Edit</a>
+              <% } %>
+            </div>
+          </div>
+        </article>
+      <% }); %>
+    </div>
+  <% } %>
+</section>
+
+<div class="drawer-admin">
+  <% if (isAdmin && activeId) { %>
+    <a class="link" href="/drawers/<%= activeId %>/edit">Edit this drawer</a>
+    <a class="link danger" href="/drawers/<%= activeId %>/delete">Delete this drawer</a>
+  <% } %>
+  <a class="link" href="/records">See every card</a>
+</div>
+
+<p class="note">
+  Drawer rules: delete a drawer and its cards move to “Unfiled”. Nothing vanishes by accident.
+</p>
+
+<%- include("partials/footer") %>

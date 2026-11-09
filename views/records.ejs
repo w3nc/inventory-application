@@ -1,0 +1,44 @@
+<%- include("partials/header") %>
+
+<section class="sheet">
+  <h2 class="sheet-title">Every card in the cellar</h2>
+
+  <% if (!records.length) { %>
+    <p class="empty">No cards yet.</p>
+  <% } else { %>
+    <table class="ledger-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Year</th>
+          <th>Shelf</th>
+          <th>Drawer</th>
+          <th class="num">Qty</th>
+          <th class="num">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% records.forEach(function (card) { %>
+          <tr>
+            <td><a href="/records/<%= card.id %>"><%= card.title %></a></td>
+            <td><%= card.artist %></td>
+            <td><%= card.release_year || "—" %></td>
+            <td><%= card.shelf || "—" %></td>
+            <td>
+              <% if (card.drawer_id) { %>
+                <a href="/?drawer=<%= card.drawer_id %>"><%= card.drawer_name %></a>
+              <% } else { %>Unfiled<% } %>
+            </td>
+            <td class="num"><%= card.qty %></td>
+            <td class="num"><%= price(card.price_cents) %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
+
+<p class="note">Unfiled cards have lost their drawer. They stay in the ledger until someone files them again.</p>
+
+<%- include("partials/footer") %>

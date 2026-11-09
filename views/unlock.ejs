@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+
+<section class="sheet form-sheet narrow">
+  <form method="post" action="/unlock" class="ledger-form">
+    <input type="hidden" name="next" value="<%= next %>">
+
+    <label class="field">
+      <span class="label">Admin password</span>
+      <input name="password" type="password" required autofocus autocomplete="current-password">
+      <% if (error) { %><span class="hint warn"><%= error %></span><% } %>
+    </label>
+
+    <div class="card-actions">
+      <button class="button solid" type="submit">Unlock</button>
+      <a class="button" href="/">Cancel</a>
+    </div>
+  </form>
+</section>
+
+<p class="note">
+  Reading the ledger is open to everyone. Only adding, editing and deleting need this password.
+</p>
+
+<%- include("partials/footer") %>
